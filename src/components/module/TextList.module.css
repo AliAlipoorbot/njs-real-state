@@ -1,0 +1,60 @@
+.container {
+  margin-bottom: 40px;
+}
+
+.container p {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.container button {
+  border: none;
+  background-color: #304ffe;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: all ease-in 0.1s;
+  cursor: pointer;
+  padding: 4px 8px;
+  display: flex;
+  margin-top: 20px;
+}
+
+.container button:hover {
+  transform: scale(1.05);
+}
+
+.container button svg {
+  font-size: 1.2rem;
+}
+
+.card {
+  display: flex;
+  margin: 10px 0;
+}
+.card input {
+  width: 300px;
+  border: none;
+  color: grey;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1rem;
+  height: 30px;
+  box-shadow: #84848472 0px 4px 15px;
+  margin-left: 10px;
+}
+
+.card input:focus {
+  border: 1px #304ffe solid;
+  outline: none;
+}
+
+.card button {
+  margin: 0 0 0 5px;
+  display: flex;
+  align-items: center;
+}
+
+.button_span {
+  margin-left: 5px;
+}

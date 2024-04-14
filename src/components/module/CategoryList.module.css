@@ -1,0 +1,20 @@
+.container {
+  margin-bottom: 40px;
+  box-shadow: #84848472 0px 4px 15px;
+  padding: 8px;
+  border-radius: 5px;
+  width: fit-content;
+}
+
+.container select {
+  margin-left: 5px;
+  border: none;
+  background-color: rgba(158, 158, 158, 0.174);
+  padding: 4px 10px;
+  border-radius: 5px;
+  width: 204px;
+}
+
+.container label {
+  color: #424242;
+}
