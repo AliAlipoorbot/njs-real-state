@@ -8,20 +8,31 @@ import toast, { Toaster } from "react-hot-toast";
 import { ThreeDots } from "react-loader-spinner";
 import styles from "./Signup.module.css";
 
+import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 function SigninPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const schema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().min(4).max(20).required(),
+  });
+
+  const { register, handleSubmit, formState: {errors} } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const router = useRouter();
 
-  const registrationHandler = async (event) => {
-    event.preventDefault();
+  const registrationHandler = async (data) => {
+    // event.preventDefault();
 
     setLoading(true);
     const res = await signIn("credentials", {
-      email,
-      password,
+      email: data.email,
+      password: data.password,
       redirect: false,
     });
     setLoading(false);
@@ -35,21 +46,21 @@ function SigninPage() {
   return (
     <div className={styles.form}>
       <h4>Login Form</h4>
-      <form>
+      <form onSubmit={handleSubmit(registrationHandler)}>
         <label htmlFor="email">Email:</label>
         <input
           type="text"
           id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          {...register("email")}
         />
+        <span>{errors.email?.message}</span>
         <label htmlFor="password">Password:</label>
         <input
           type="password"
           id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          {...register("password")}
         />
+        <span>{errors.password?.message}</span>
         {loading ? (
           <ThreeDots
             visible={true}
@@ -59,9 +70,8 @@ function SigninPage() {
             wrapperStyle={{ margin: "auto" }}
           />
         ) : (
-          <button type="submit" onClick={registrationHandler}>
-            Login
-          </button>
+          // <button type="submit" onClick={registrationHandler}>
+          <button type="submit">Login</button>
         )}
       </form>
       <p>

@@ -31,10 +31,18 @@
   font-size: 14px;
 }
 
+.form span {
+  color: red;
+  width: 250px;
+  font-size: 0.75rem;
+  margin-bottom: 30px;
+
+}
+
 .form input {
   box-shadow: #8484844d 0px 2px 30px;
   background-color: #fafafa;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   width: 250px;
   border: none;
   color: grey;
