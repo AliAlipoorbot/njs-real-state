@@ -7,21 +7,33 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { ThreeDots } from "react-loader-spinner";
 
+import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 function SignupPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
-  const registrationHandler = async (event) => {
-    event.preventDefault();
+  const schema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().min(4).max(20).required(),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "password don't match!")
+      .required(),
+  });
 
-    if (password !== rePassword) {
-      toast.error("Confirm Password Not Match!");
-      return;
-    }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const registrationHandler = async ({ email, password }) => {
     setLoading(true);
     const res = await fetch("/api/auth/signup", {
       method: "POST",
@@ -43,28 +55,23 @@ function SignupPage() {
   return (
     <div className={styles.form}>
       <h4>Registration Form</h4>
-      <form>
+      <form onSubmit={handleSubmit(registrationHandler)}>
         <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <input type="text" id="email" {...register("email")} />
+        <span>{errors.email?.message}</span>
+
         <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <input type="password" id="password" {...register("password")} />
+        <span>{errors.password?.message}</span>
+
         <label htmlFor="re-password">Confirm Password:</label>
         <input
           type="password"
           id="re-password"
-          value={rePassword}
-          onChange={(e) => setRePassword(e.target.value)}
+          {...register("confirmPassword")}
         />
+        <span>{errors.confirmPassword?.message}</span>
+
         {loading ? (
           <ThreeDots
             visible={true}
@@ -74,9 +81,7 @@ function SignupPage() {
             wrapperStyle={{ margin: "auto" }}
           />
         ) : (
-          <button type="submit" onClick={registrationHandler}>
-            Register
-          </button>
+          <button type="submit">Register</button>
         )}
       </form>
       <p>

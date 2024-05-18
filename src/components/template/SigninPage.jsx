@@ -26,13 +26,12 @@ function SigninPage() {
 
   const router = useRouter();
 
-  const registrationHandler = async (data) => {
-    // event.preventDefault();
+  const registrationHandler = async ({ email, password }) => {
 
     setLoading(true);
     const res = await signIn("credentials", {
-      email: data.email,
-      password: data.password,
+      email,
+      password,
       redirect: false,
     });
     setLoading(false);
@@ -70,7 +69,6 @@ function SigninPage() {
             wrapperStyle={{ margin: "auto" }}
           />
         ) : (
-          // <button type="submit" onClick={registrationHandler}>
           <button type="submit">Login</button>
         )}
       </form>
