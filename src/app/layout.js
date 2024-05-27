@@ -1,10 +1,13 @@
-import { Montserrat } from "next/font/google";
+import { Poppins } from "next/font/google";
 import Layout from "@/components/layout/Layout";
 import NextAuthProvider from "@/providers/NextAuthProvider";
 
 import "./globals.css";
 
-const montserrat = Montserrat({ subsets: ["latin"], weight: "400" });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -14,7 +17,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>
+      <body className={poppins.className}>
         <NextAuthProvider>
           <Layout>{children}</Layout>
         </NextAuthProvider>

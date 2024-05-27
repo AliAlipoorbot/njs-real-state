@@ -1,14 +1,13 @@
 import CategoryCard from "../module/CategoryCard";
 import styles from "./HomePage.module.css";
+import Hero from "../module/Hero";
 
 function HomePage() {
-
   return (
     <div>
       <div className={styles.banner}>
-        <div className={styles.desc}>
-          <h1>Buying and Renting property</h1>
-        </div>
+        <div className={styles.white_gradient} />
+        <Hero />
       </div>
       <div className={styles.categories}>
         <CategoryCard title="Villa" name="villa" />

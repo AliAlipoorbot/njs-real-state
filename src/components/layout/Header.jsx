@@ -1,42 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { FiLogIn } from "react-icons/fi";
-import { FaUserAlt } from "react-icons/fa";
 import styles from "./Header.module.css";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 function Header() {
   const { data } = useSession();
 
   return (
-    <header className={styles.header}>
-      <div>
-        <ul>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/find-property">Find a Property</Link>
-          </li>
-        </ul>
-      </div>
-      {data ? (
-        <div className={styles.login_dashboard}>
-          <Link href="/dashboard">
-            <span>Your Profile</span>
-            <FaUserAlt />
-          </Link>
+    <section className={styles.h_wrapper}>
+      <header className={`${styles.header} flexCenter paddings innerWidth`}>
+        <Link href="/">
+          <Image src="/images/logo.png" alt="logo" width={100} height={40} />
+        </Link>
+        <div className="flexCenter">
+          <Link href="/find-property">Find a Property</Link>
+          {data ? (
+            <div className={styles.button}>
+              <Link href="/dashboard">Your Profile</Link>
+            </div>
+          ) : (
+            <div className={styles.button}>
+              <Link href="/signin">Login</Link>
+            </div>
+          )}
         </div>
-      ) : (
-        <div className={styles.login}>
-          <Link href="/signin">
-            <span>Login</span>
-            <FiLogIn />
-          </Link>
-        </div>
-      )}
-    </header>
+      </header>
+    </section>
   );
 }
 

@@ -20,14 +20,17 @@ function SigninPage() {
     password: yup.string().min(4).max(20).required(),
   });
 
-  const { register, handleSubmit, formState: {errors} } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
   const router = useRouter();
 
   const registrationHandler = async ({ email, password }) => {
-
     setLoading(true);
     const res = await signIn("credentials", {
       email,
@@ -47,18 +50,10 @@ function SigninPage() {
       <h4>Login Form</h4>
       <form onSubmit={handleSubmit(registrationHandler)}>
         <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          id="email"
-          {...register("email")}
-        />
+        <input type="text" id="email" {...register("email")} />
         <span>{errors.email?.message}</span>
         <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          {...register("password")}
-        />
+        <input type="password" id="password" {...register("password")} />
         <span>{errors.password?.message}</span>
         {loading ? (
           <ThreeDots
